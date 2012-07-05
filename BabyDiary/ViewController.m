@@ -7,12 +7,23 @@
 //
 
 #import "ViewController.h"
-
-@interface ViewController ()
+#import "DayTimeName.h"
+@interface ViewController () <UITextFieldDelegate>
 
 @end
 
 @implementation ViewController
+@synthesize dayTimeName = _dayTimeName;
+@synthesize nameTextfield = _nameTextfield;
+@synthesize birthDate = _birthDate;
+@synthesize datePicker = _datePicker;
+
+-(DayTimeName *)dayTimeName{
+    if(!_dayTimeName){
+        _dayTimeName = [[DayTimeName alloc]init];
+    }
+    return _dayTimeName;
+}
 
 - (void)viewDidLoad
 {
@@ -22,6 +33,10 @@
 
 - (void)viewDidUnload
 {
+    [self setNameTextfield:nil];
+    [self setBirthDate:nil];
+    [self setDatePicker:nil];
+
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -30,5 +45,38 @@
 {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
+
+- (IBAction)changeDatePicker:(UIDatePicker *)sender {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy 년 MM 월 dd 일"];
+    self.birthDate.text = [formatter stringFromDate:sender.date];
+    
+}
+
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
+
+- (IBAction)saveDate:(UIBarButtonItem *)sender {
+        self.dayTimeName.babyName = self.nameTextfield.text;
+        self.dayTimeName.birthDay = self.datePicker.date;
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if(!self.dayTimeName){
+        self.dayTimeName = [[DayTimeName alloc]init];
+        self.dayTimeName.babyName = self.nameTextfield.text;
+        self.dayTimeName.birthDay = self.datePicker.date;
+    }
+    [[self dayTimeName]persistWithName:self.nameTextfield.text birthDay:self.datePicker.date];
+
+    
+    
+    
+}
+
 
 @end
