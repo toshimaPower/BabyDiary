@@ -18,7 +18,7 @@
 @property (nonatomic, strong) NSMutableArray *myArray;
 @property (nonatomic, strong) NSMutableArray *dayOfWeekArray;
 
-
+@property (nonatomic,strong) NSString *myDay;
 -(int)isLeapYear:(int)year;
 -(int)getLastDay:(int)year month:(int)month;
 -(int)zeller:(int)year month:(int)month day:(int)day;

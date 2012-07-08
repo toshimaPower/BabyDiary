@@ -18,10 +18,18 @@
 
 @interface DiaryContentsViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (nonatomic, strong) NSString *day;
+
+@property (nonatomic, strong) NSString *weekOfDay;
+
 
 @property (nonatomic, strong) DayTimeName *babyDiaryDataList;
 @property (nonatomic, strong) CalendarData *calendarDiary;
+
+@property (weak, nonatomic) IBOutlet UILabel *dayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dayOfWeek;
+@property (weak, nonatomic) IBOutlet UITextView *diaryWrite;
+
 
 @property (nonatomic, weak) id<DiaryContentsViewControllerDelegate> delegate; 
 

@@ -13,11 +13,15 @@
 @end
 
 @implementation DiaryContentsViewController
-@synthesize textView = _textView;
+
 @synthesize delegate = _delegate;
 @synthesize calendarDiary = _calendarDiary;
+@synthesize dayLabel = _dayLabel;
+@synthesize dayOfWeek = _dayOfWeek;
+@synthesize diaryWrite = _diaryWrite;
 @synthesize babyDiaryDataList = _babyDiaryDataList;
-
+@synthesize day = _day;
+@synthesize weekOfDay = _weekOfDay;
 
 -(DayTimeName *)babyDiaryDataList{
     if(!_babyDiaryDataList){
@@ -27,6 +31,7 @@
     NSLog(@"babydiaryData world");
     return _babyDiaryDataList;
 }
+
 -(CalendarData *)calendarDiary{
     if(_calendarDiary == nil){
         _calendarDiary = [[CalendarData alloc]init];
@@ -47,12 +52,20 @@
 
 - (void)viewDidLoad
 {
+    
+    NSLog(@"%@",self.day);
+    self.dayLabel.text = self.day;
+    self.dayOfWeek.text = self.weekOfDay;
+    
        [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
 
 - (void)viewDidUnload
 {
+    [self setDayLabel:nil];
+    [self setDayOfWeek:nil];
+    [self setDiaryWrite:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -66,8 +79,8 @@
 - (IBAction)saveAction:(UIBarButtonItem *)sender {
     
     
-    NSMutableString *diary = [[NSMutableString alloc]init];
-    diary = [self.textView.text mutableCopy];
+ //   NSMutableString *diary = [[NSMutableString alloc]init];
+   
     
   //  self.calendarDiary.myDiaryContents = [diary copy];
     [self.delegate detailViewController:self didChangeCalendarData:self.calendarDiary ];

@@ -7,6 +7,10 @@
 //
 
 #import "CalendarData.h"
+@interface CalendarData ()
+@property (nonatomic, strong)NSMutableArray *dayList;
+@end
+
 
 @implementation CalendarData
 @synthesize gyear;
@@ -16,7 +20,8 @@
 @synthesize m_bday;
 @synthesize myArray ;
 @synthesize dayOfWeekArray = _dayOfWeekArray;
-
+@synthesize dayList = _dayList;
+@synthesize myDay = _myDay;
 
 //윤년 구하는 법
 -(int)isLeapYear:(int)year{
@@ -120,14 +125,14 @@
         dayOfWeek = @"Sat";
     }
     
-    NSLog(@"%@",dayOfWeek);
+  
     return dayOfWeek;
 }
 
 
 -(void)fastEnum:(int)year withMonth:(int)month{
     
-    
+    /*
     myArray  = [[NSMutableArray alloc]init];
     self.dayOfWeekArray = [[NSMutableArray alloc]init];
     
@@ -143,8 +148,51 @@
         NSLog(@"value : %i",[myNumber intValue]);
     }
    
+   */
+        
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    NSMutableArray *babyDiaryList = [NSMutableArray array];
+    
+    NSString *string2 = (NSString *)[defaults objectForKey:[NSString stringWithFormat:@"babyDiaryList %i %i",year,month]];
+    if(string2 == nil){
+        for(int i = 0; i< [self getLastDay:year month:month];i++){
+            NSString *day = [NSString stringWithFormat:@"%i 일",i+1];
+            NSString * first_day_of_week = [self dayOfThwWeek:[self zeller:gyear month:gmonth day:i+1]];
+            NSMutableString *diaryContents = [@" " mutableCopy];
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  day,@"Diary_Day",
+                                  first_day_of_week,@"Diary_Day_of_Week",
+                                  diaryContents,@"Diary_Contents",nil];
+            [babyDiaryList addObject:dict];
+            
+        }
+        
+        [defaults setObject:babyDiaryList forKey:[NSString stringWithFormat:@"babyDiaryList %i %i",year,month] ];
+        [defaults synchronize];
+        
+        NSLog(@"SG World");
+    }
+     /*   
+   
+    NSArray *babyDiaryListLoad = [defaults objectForKey:[NSString stringWithFormat:@"babyDiaryList %i %i",year,month]];
+    
+    myArray  = [[NSMutableArray alloc]init];
+    self.dayOfWeekArray = [[NSMutableArray alloc]init];
+    if(babyDiaryListLoad){
+        [babyDiaryList removeAllObjects];
+        for(NSDictionary *dic in babyDiaryListLoad){
+       //     CalendarData *data = [[CalendarData alloc]init];
+            NSString *day = [dic objectForKey:@"Diary_Day"];
+            NSString *day_of_week = [dic objectForKey:@"Diary_Day_of_Week"];
+          //  NSString *day_diary_contents = [dic objectForKey:@"Diary_contents"];
+          
+            [myArray addObject:day];
+            [self.dayOfWeekArray addObject:day_of_week];
+                  
+        }
+        
+    }
+   */
 }
-
-
 @end

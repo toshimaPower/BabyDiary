@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A86A7B415A66A16003E53CA /* DiaryCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86A7B315A66A16003E53CA /* DiaryCustomCell.m */; };
 		5AA1538915A561080083E5C8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AA1538815A561080083E5C8 /* UIKit.framework */; };
 		5AA1538B15A561080083E5C8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AA1538A15A561080083E5C8 /* Foundation.framework */; };
 		5AA1538D15A561080083E5C8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AA1538C15A561080083E5C8 /* CoreGraphics.framework */; };
@@ -23,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5A86A7B215A66A16003E53CA /* DiaryCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryCustomCell.h; sourceTree = "<group>"; };
+		5A86A7B315A66A16003E53CA /* DiaryCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryCustomCell.m; sourceTree = "<group>"; };
 		5AA1538415A561080083E5C8 /* BabyDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BabyDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AA1538815A561080083E5C8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5AA1538A15A561080083E5C8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -93,11 +96,11 @@
 		5AA1538E15A561080083E5C8 /* BabyDiary */ = {
 			isa = PBXGroup;
 			children = (
+				5AA1539A15A561080083E5C8 /* MainStoryboard.storyboard */,
 				5AA153B215A568F20083E5C8 /* Diary */,
 				5AA153B315A56A9C0083E5C8 /* Main */,
 				5AA1539715A561080083E5C8 /* AppDelegate.h */,
 				5AA1539815A561080083E5C8 /* AppDelegate.m */,
-				5AA1539A15A561080083E5C8 /* MainStoryboard.storyboard */,
 				5AA1539D15A561080083E5C8 /* ViewController.h */,
 				5AA1539E15A561080083E5C8 /* ViewController.m */,
 				5AA1538F15A561080083E5C8 /* Supporting Files */,
@@ -130,6 +133,8 @@
 		5AA153B215A568F20083E5C8 /* Diary */ = {
 			isa = PBXGroup;
 			children = (
+				5A86A7B215A66A16003E53CA /* DiaryCustomCell.h */,
+				5A86A7B315A66A16003E53CA /* DiaryCustomCell.m */,
 				5AA153AC15A566340083E5C8 /* DiaryTableViewController.h */,
 				5AA153AD15A566340083E5C8 /* DiaryTableViewController.m */,
 				5AA153AF15A5670F0083E5C8 /* DiaryContentsViewController.h */,
@@ -218,6 +223,7 @@
 				5AA153AE15A566340083E5C8 /* DiaryTableViewController.m in Sources */,
 				5AA153B115A5670F0083E5C8 /* DiaryContentsViewController.m in Sources */,
 				5AA153B615A56AC00083E5C8 /* MainCountDownViewController.m in Sources */,
+				5A86A7B415A66A16003E53CA /* DiaryCustomCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +335,7 @@
 				5AA153A415A561080083E5C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
