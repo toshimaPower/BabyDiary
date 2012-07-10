@@ -15,10 +15,16 @@
 @property int gday;
 @property int m_aday;
 @property int m_bday;
-@property (nonatomic, strong) NSMutableArray *myArray;
-@property (nonatomic, strong) NSMutableArray *dayOfWeekArray;
+
+@property (nonatomic, strong) NSMutableArray *babyDiaryList;
+
 
 @property (nonatomic,strong) NSString *myDay;
+@property (nonatomic, strong) NSString *myDayOfWeek;
+@property (nonatomic, strong)NSMutableString *myDiaryContents;
+
+
+
 -(int)isLeapYear:(int)year;
 -(int)getLastDay:(int)year month:(int)month;
 -(int)zeller:(int)year month:(int)month day:(int)day;
@@ -27,7 +33,7 @@
 
 -(void)movePrevMonth;
 -(void)moveNextMonth;
-
+-(NSString *)dayOfThwWeek:(int)aDayOfTheWeek;
 
 
 -(void)moveCurrentDate;

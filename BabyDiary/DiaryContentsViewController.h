@@ -19,8 +19,8 @@
 @interface DiaryContentsViewController : UIViewController
 
 @property (nonatomic, strong) NSString *day;
-
 @property (nonatomic, strong) NSString *weekOfDay;
+@property (nonatomic, strong) NSString *myDiaryContents;
 
 
 @property (nonatomic, strong) DayTimeName *babyDiaryDataList;

@@ -22,6 +22,9 @@
 @synthesize babyDiaryDataList = _babyDiaryDataList;
 @synthesize day = _day;
 @synthesize weekOfDay = _weekOfDay;
+@synthesize myDiaryContents = _myDiaryContents;
+
+
 
 -(DayTimeName *)babyDiaryDataList{
     if(!_babyDiaryDataList){
@@ -52,10 +55,10 @@
 
 - (void)viewDidLoad
 {
-    
-    NSLog(@"%@",self.day);
-    self.dayLabel.text = self.day;
-    self.dayOfWeek.text = self.weekOfDay;
+ 
+    self.dayLabel.text = self.calendarDiary.myDay;
+    self.dayOfWeek.text = self.calendarDiary.myDayOfWeek;
+    self.diaryWrite.text = self.calendarDiary.myDiaryContents;
     
        [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -82,7 +85,7 @@
  //   NSMutableString *diary = [[NSMutableString alloc]init];
    
     
-  //  self.calendarDiary.myDiaryContents = [diary copy];
+     self.calendarDiary.myDiaryContents = [self.diaryWrite.text copy];
     [self.delegate detailViewController:self didChangeCalendarData:self.calendarDiary ];
     
     

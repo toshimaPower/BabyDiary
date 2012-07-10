@@ -8,7 +8,7 @@
 
 #import "CalendarData.h"
 @interface CalendarData ()
-@property (nonatomic, strong)NSMutableArray *dayList;
+
 @end
 
 
@@ -18,10 +18,12 @@
 @synthesize gday;
 @synthesize m_aday;
 @synthesize m_bday;
-@synthesize myArray ;
-@synthesize dayOfWeekArray = _dayOfWeekArray;
-@synthesize dayList = _dayList;
+
+
 @synthesize myDay = _myDay;
+@synthesize myDayOfWeek = _myDayOfWeek;
+@synthesize myDiaryContents = _myDiaryContents;
+@synthesize babyDiaryList = _babyDiaryList;
 
 //윤년 구하는 법
 -(int)isLeapYear:(int)year{
@@ -33,11 +35,14 @@
 
 //해당 월의 마지막 날을 구하는 함수
 -(int)getLastDay:(int)year month:(int)month{
+    
     if(month == 2){
         if((BOOL)[self isLeapYear:year]) {return 29;}
         else {return 28;}
     }else if( month == 4 || month == 6 || month == 9 || month == 11) {return 30;}
     else {return 31;}
+    
+   
     return -1;
 }
 
@@ -128,11 +133,42 @@
   
     return dayOfWeek;
 }
-
-
 -(void)fastEnum:(int)year withMonth:(int)month{
     
-    /*
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    self.babyDiaryList = [NSMutableArray array];
+    
+    NSString *string2 = (NSString *)[defaults objectForKey:[NSString stringWithFormat:@"babyDiaryList %i %i",year,month]];
+    if(string2 == nil){
+        for(int i = 0; i< [self getLastDay:year month:month];i++){
+            
+            self.myDay = [NSString stringWithFormat:@"%i 일",i+1];
+            self.myDayOfWeek = (NSString *)[self dayOfThwWeek:[self zeller:gyear month:gmonth day:i+1]];
+            self.myDiaryContents = [@" " mutableCopy];
+                       
+            
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  self.myDay,@"Diary_Day",
+                                  self.myDayOfWeek,@"Diary_Day_of_Week",
+                                  self.myDiaryContents,@"Diary_Contents",nil];
+            [self.babyDiaryList addObject:dict];
+          
+            
+        }
+        
+        [defaults setObject:self.babyDiaryList forKey:[NSString stringWithFormat:@"babyDiaryList %i %i",year,month] ];
+        [defaults synchronize];
+        
+       
+    }
+}
+
+
+/*
+-(void)fastEnum:(int)year withMonth:(int)month{
+    
+    
     myArray  = [[NSMutableArray alloc]init];
     self.dayOfWeekArray = [[NSMutableArray alloc]init];
     
@@ -148,7 +184,7 @@
         NSLog(@"value : %i",[myNumber intValue]);
     }
    
-   */
+  
         
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -173,7 +209,7 @@
         
         NSLog(@"SG World");
     }
-     /*   
+        
    
     NSArray *babyDiaryListLoad = [defaults objectForKey:[NSString stringWithFormat:@"babyDiaryList %i %i",year,month]];
     
@@ -193,6 +229,7 @@
         }
         
     }
-   */
+   
 }
+*/
 @end

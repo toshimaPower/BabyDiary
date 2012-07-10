@@ -10,7 +10,9 @@
 #import "DiaryCustomCell.h"
 #import "DiaryContentsViewController.h"
 
-@interface DiaryTableViewController ()
+@interface DiaryTableViewController ()<DiaryContentsViewControllerDelegate>
+@property (nonatomic, strong) NSMutableArray *diary_List;
+@property (nonatomic, strong) NSIndexPath *indexPath;
 
 @end
 
@@ -18,47 +20,45 @@
 @synthesize calendar = _calendar;
 @synthesize dayLabel = _dayLabel;
 @synthesize dayOfWeekDay = _dayOfWeekDay;
-@synthesize appList = _appList;
-@synthesize appsKey = _appsKey;
+
 
 @synthesize myArray = _myArray;
 @synthesize dayOfWeekArray = _dayOfWeekArray;
 @synthesize diaryContents = _diaryContents;
-@synthesize dict = _dict;
 
-/*
--(void)loadData{
-    NSLog(@"world12");
-     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSLog(@"world123");
-      self.appList = [defaults objectForKey:[NSString stringWithFormat:@"babyDiaryList %i %i",self.calendar.gyear,self.calendar.gmonth]];
-    NSLog(@"world1234");
-    self.appsKey = [[self.appList allKeys] sortedArrayUsingSelector:@selector(compare:)];
- 
-    NSLog(@"world12345");
-    NSLog(@"ss %@",self.appList);
+@synthesize diary_List = _diary_List;
+@synthesize indexPath = _indexPath;
+
+
+-(void)saveData{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *babyDiaryList = [NSMutableArray array];
+    for (CalendarData *data in self.calendar.babyDiaryList) {
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              data.myDay,@"Diary_Day",
+                              data.myDayOfWeek,@"Diary_Day_of_Week",
+                              data.myDiaryContents,@"Diary_Contents",nil];
+        [babyDiaryList addObject:dict];
+    }
+    [defaults setObject:babyDiaryList forKey:[NSString stringWithFormat:@"babyDiaryList %i %i",self.calendar.gyear,self.calendar.gmonth]];
+    [defaults synchronize];
 }
-*/
-
-
 
 -(void)loadData{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *babyDiaryListLoad = [defaults objectForKey:[NSString stringWithFormat:@"babyDiaryList %i %i",self.calendar.gyear,self.calendar.gmonth]];
     
-    self.myArray  = [[NSMutableArray alloc]init];
-    self.dayOfWeekArray = [[NSMutableArray alloc]init];
-   
-    if(babyDiaryListLoad){
-        
-        for(_dict in babyDiaryListLoad){
-            //     CalendarData *data = [[CalendarData alloc]init];
-            [self.dayOfWeekArray addObject:[_dict objectForKey:@"Diary_Day_of_Week"]];
-            [self.diaryContents addObject: [_dict objectForKey:@"Diary_contents"]];
-            [self.myArray addObject:[_dict objectForKey:@"Diary_Day"]];
+    if (babyDiaryListLoad) {
+        [self.calendar.babyDiaryList removeAllObjects];
+        for (NSDictionary *dict in babyDiaryListLoad) {
+            CalendarData *data = [[CalendarData alloc]init];
+            data.myDay = [dict objectForKey:@"Diary_Day"];
+            data.myDayOfWeek = [dict objectForKey:@"Diary_Day_of_Week"];
+            data.myDiaryContents = [dict objectForKey:@"Diary_Contents"];
+            [self.calendar.babyDiaryList addObject:data];
         }
     }
-//    self.appsKey= [[_dict allKeys]sortedArrayUsingSelector:@selector(compare:)];
+    
     
 }
  
@@ -123,41 +123,23 @@
 {
 
     // Return the number of rows in the section.
-    return [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
-
+    NSLog(@"2");
+  //  return [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
+    return self.calendar.babyDiaryList.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  
-
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+   
     DiaryCustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"show_detail"];
-    cell.dayLabel.text = [self.myArray objectAtIndex:indexPath.row];
-    cell.weekOfDayLabel.text = [self.dayOfWeekArray objectAtIndex:indexPath.row];
-    cell.diaryWrite.text = [self.diaryContents objectAtIndex:indexPath.row];
+    CalendarData *data = [self.calendar.babyDiaryList objectAtIndex:indexPath.row];
+    cell.dayLabel.text = data.myDay;
+    cell.weekOfDayLabel.text = data.myDayOfWeek;
+    cell.diaryWrite.text = data.myDiaryContents;
     return cell;
-
 }
 
 #pragma mark - Table view delegate
 /*
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    
-   //  <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-    DiaryContentsViewController *viewController = [[DiaryContentsViewController alloc]initWithNibName:@"DiaryContentsViewController" bundle:nil];
-    //  viewController.babyDiaryDataList = diarydaTa;
-    viewController.day=  [self.myArray objectAtIndex:indexPath.row];
-    viewController.weekOfDay = [self.dayOfWeekArray objectAtIndex:indexPath.row]; 
-    
-    // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:viewController animated:YES];
-     
-}
-
-*/
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSLog(@"Hello");
   //  if([[segue identifier]isEqualToString:@"show_detail"]){
@@ -173,37 +155,75 @@
    // }
 }
 
+*/
 
--(void)detailViewController:(DiaryContentsViewController *)viewController didChangeCalendarDate:(CalendarData *)diaryList{
-  //  [self.diaryListData addObject:diaryList];
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+   
+    if([[segue identifier] isEqualToString:@"show_detail"]){
+        self.indexPath = [self.tableView indexPathForSelectedRow];
+        CalendarData *data = [self.calendar.babyDiaryList objectAtIndex:self.indexPath.row];
+        DiaryContentsViewController *viewController = [segue destinationViewController];
+        viewController.calendarDiary = data; 
+        viewController.delegate = self;
+    }
+}
+
+-(void)detailViewController:(DiaryContentsViewController *)viewController didChangeCalendarData:(CalendarData *)diaryList{
     [self.navigationController popViewControllerAnimated:YES];
-    
+ //    self.indexPath = [self.tableView indexPathForSelectedRow];   
+    [self.calendar.babyDiaryList replaceObjectAtIndex:self.indexPath.row withObject:diaryList];
+    [self.tableView reloadData];
+    [self saveData];
 }
 
 #pragma mark - Table view delegate
+
 - (IBAction)prevDay:(UIBarButtonItem *)sender {
+   
     [self.calendar movePrevMonth];
     
     [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
     [self.calendar fastEnum:self.calendar.gyear withMonth:self.calendar.gmonth];
     self.navigationItem.title = [NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth];
     
-    NSLog(@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth);
+    [self loadData];
     [self.tableView reloadData];
     
     
     
 }
 
-- (IBAction)next:(UIBarButtonItem *)sender {
-    [self.calendar moveNextMonth];
+- (IBAction)ss:(id)sender {
+    [self.calendar movePrevMonth];
     
+    [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
     [self.calendar fastEnum:self.calendar.gyear withMonth:self.calendar.gmonth];
     self.navigationItem.title = [NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth];
     
-    
-    [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
+    [self loadData];
     [self.tableView reloadData];
+    
+
+}
+- (IBAction)ll:(id)sender {
+    [self.calendar moveNextMonth];
+    [self.calendar fastEnum:self.calendar.gyear withMonth:self.calendar.gmonth];
+    self.navigationItem.title = [NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth];
+    [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
+    [self loadData];
+    [self.tableView reloadData];
+    
+
+}
+
+- (IBAction)next:(UIBarButtonItem *)sender {
+    [self.calendar moveNextMonth];
+    [self.calendar fastEnum:self.calendar.gyear withMonth:self.calendar.gmonth];
+    self.navigationItem.title = [NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth];
+    [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
+    [self loadData];
+    [self.tableView reloadData];
+    
     
 }
 
