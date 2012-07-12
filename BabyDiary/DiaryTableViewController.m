@@ -30,6 +30,14 @@
 @synthesize indexPath = _indexPath;
 
 
+-(void)makeFirstTableView{
+    
+   
+    int i = self.calendar.gday -1;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+}
+
 -(void)saveData{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray *babyDiaryList = [NSMutableArray array];
@@ -115,6 +123,7 @@
     [self loadData];
     [self gestureLeft];
     [self gestureRight];
+    [self makeFirstTableView];
     [super viewDidLoad];
 
     // Uncomment the following line to preserve selection between presentations.
@@ -148,22 +157,27 @@
     return 1;
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
     // Return the number of rows in the section.
-    NSLog(@"2");
-  //  return [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
+      //  return [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
     return self.calendar.babyDiaryList.count;
 }
 
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+   
    
     DiaryCustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"show_detail"];
     CalendarData *data = [self.calendar.babyDiaryList objectAtIndex:indexPath.row];
     cell.dayLabel.text = data.myDay;
     cell.weekOfDayLabel.text = data.myDayOfWeek;
     cell.diaryWrite.text = data.myDiaryContents;
+    
+    
+    
     return cell;
 }
 
