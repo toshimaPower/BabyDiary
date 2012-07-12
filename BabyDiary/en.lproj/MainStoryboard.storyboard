@@ -167,6 +167,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="dtr-kP-EhA">
+                        <barButtonItem key="backBarButtonItem" title="MainS" id="58L-6X-AmC"/>
                         <barButtonItem key="rightBarButtonItem" title="일기" id="wlY-Zq-ENy">
                             <connections>
                                 <segue destination="Lpx-MW-RUu" kind="push" id="GlA-ZU-vci"/>
@@ -195,11 +196,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <color key="backgroundColor" red="1" green="0.97925038918232321" blue="0.71578112510564595" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="separatorColor" red="0.70863506580000002" green="1" blue="0.58352770880000004" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell autoresizesSubviews="NO" alpha="0.40000000000000013" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="show_detail" rowHeight="85" id="TLn-Ri-VSh" customClass="DiaryCustomCell">
+                            <tableViewCell autoresizesSubviews="NO" alpha="0.40000000000000013" contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="show_detail" rowHeight="85" id="TLn-Ri-VSh" customClass="DiaryCustomCell">
                                 <rect key="frame" x="0.0" y="22" width="320" height="85"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="84"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="84"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="날짜" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="I0G-ua-ndz">
@@ -216,7 +217,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" autoresizesSubviews="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" numberOfLines="51" baselineAdjustment="alignBaselines" minimumFontSize="10" id="cLJ-Lr-XNy">
+                                        <label autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" numberOfLines="51" baselineAdjustment="alignBaselines" minimumFontSize="10" id="cLJ-Lr-XNy">
                                             <rect key="frame" x="58" y="0.0" width="262" height="84"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
@@ -242,17 +243,27 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="us6-xn-Oxk">
-                        <barButtonItem key="leftBarButtonItem" title="지난달" id="E6f-yV-jcm">
+                        <nil key="title"/>
+                        <barButtonItem key="backBarButtonItem" title="Main" id="dMk-67-W2P"/>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Y5f-oe-8Q9">
+                            <rect key="frame" x="86" y="8" width="147" height="29"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                            <state key="normal">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                             <connections>
-                                <action selector="prevDay:" destination="Lpx-MW-RUu" id="gJ4-YZ-5jo"/>
+                                <action selector="todayButton:" destination="Lpx-MW-RUu" eventType="touchUpInside" id="kxh-N5-zCW"/>
                             </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="다음달" id="d20-GJ-Mag">
-                            <connections>
-                                <action selector="next:" destination="Lpx-MW-RUu" id="giY-rw-fps"/>
-                            </connections>
-                        </barButtonItem>
+                        </button>
                     </navigationItem>
+                    <connections>
+                        <outlet property="dayButton" destination="Y5f-oe-8Q9" id="cQ0-mN-Ei3"/>
+                    </connections>
                 </tableViewController>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="QY1-zZ-efR">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -352,8 +363,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <class className="DiaryTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DiaryTableViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="dayLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dayOfWeekDay" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="dayButton" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="MainCountDownViewController" superclassName="UIViewController">

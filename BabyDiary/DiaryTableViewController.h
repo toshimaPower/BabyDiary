@@ -13,10 +13,9 @@
 @interface DiaryTableViewController : UITableViewController
 
 @property (nonatomic, strong) CalendarData *calendar;
-@property (weak, nonatomic) IBOutlet UILabel *dayLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dayOfWeekDay;
 
 
+@property (weak, nonatomic) IBOutlet UIButton *dayButton;
 
 @property (strong,nonatomic) NSMutableArray *myArray;
 @property (strong,nonatomic) NSMutableArray *dayOfWeekArray;

@@ -18,8 +18,8 @@
 
 @implementation DiaryTableViewController
 @synthesize calendar = _calendar;
-@synthesize dayLabel = _dayLabel;
-@synthesize dayOfWeekDay = _dayOfWeekDay;
+
+@synthesize dayButton = _dayButton;
 
 
 @synthesize myArray = _myArray;
@@ -62,6 +62,32 @@
     
 }
  
+-(void)gestureRight{
+    UISwipeGestureRecognizer *right = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(next:)];
+    right.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.view addGestureRecognizer:right];
+}
+-(void)gestureLeft{
+    UISwipeGestureRecognizer *left = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(prevDay:)];
+    left.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:left];
+    
+
+}
+- (IBAction)todayButton:(id)sender {
+    NSLog(@"today");
+    
+    [self.calendar moveCurrentDate];
+    [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
+    [self.calendar fastEnum:self.calendar.gyear withMonth:self.calendar.gmonth];
+    [self.dayButton setTitle:[NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth] forState:UIControlStateNormal];
+    
+    [self loadData];
+    [self.tableView reloadData];
+
+  //  NSLog(@"today %@",[self.calendar moveCurrentDate]);
+}
+
 -(CalendarData *)calendar{
     if(!_calendar){
         _calendar = [[CalendarData alloc]init];
@@ -84,8 +110,11 @@
 - (void)viewDidLoad
 {
     [self.calendar fastEnum:self.calendar.gyear withMonth:self.calendar.gmonth];
-    self.navigationItem.title = [NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth];
+ //   self.dayButton.titleLabel.text = [NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth];
+    [self.dayButton setTitle:[NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth] forState:UIControlStateNormal];
     [self loadData];
+    [self gestureLeft];
+    [self gestureRight];
     [super viewDidLoad];
 
     // Uncomment the following line to preserve selection between presentations.
@@ -98,8 +127,8 @@
 - (void)viewDidUnload
 {
     [self setCalendar:nil];
-    [self setDayLabel:nil];
-    [self setDayOfWeekDay:nil];
+   
+    [self setDayButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -176,15 +205,17 @@
     [self saveData];
 }
 
+
+
 #pragma mark - Table view delegate
 
-- (IBAction)prevDay:(UIBarButtonItem *)sender {
+- (void)prevDay:(UIBarButtonItem *)sender {
    
     [self.calendar movePrevMonth];
     
     [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
     [self.calendar fastEnum:self.calendar.gyear withMonth:self.calendar.gmonth];
-    self.navigationItem.title = [NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth];
+   [self.dayButton setTitle:[NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth] forState:UIControlStateNormal];
     
     [self loadData];
     [self.tableView reloadData];
@@ -193,33 +224,10 @@
     
 }
 
-- (IBAction)ss:(id)sender {
-    [self.calendar movePrevMonth];
-    
-    [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
-    [self.calendar fastEnum:self.calendar.gyear withMonth:self.calendar.gmonth];
-    self.navigationItem.title = [NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth];
-    
-    [self loadData];
-    [self.tableView reloadData];
-    
-
-}
-- (IBAction)ll:(id)sender {
+- (void)next:(UIBarButtonItem *)sender {
     [self.calendar moveNextMonth];
     [self.calendar fastEnum:self.calendar.gyear withMonth:self.calendar.gmonth];
-    self.navigationItem.title = [NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth];
-    [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
-    [self loadData];
-    [self.tableView reloadData];
-    
-
-}
-
-- (IBAction)next:(UIBarButtonItem *)sender {
-    [self.calendar moveNextMonth];
-    [self.calendar fastEnum:self.calendar.gyear withMonth:self.calendar.gmonth];
-    self.navigationItem.title = [NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth];
+    [self.dayButton setTitle:[NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth] forState:UIControlStateNormal];
     [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
     [self loadData];
     [self.tableView reloadData];

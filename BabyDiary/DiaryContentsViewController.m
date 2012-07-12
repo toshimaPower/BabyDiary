@@ -1,3 +1,5 @@
+
+
 //
 //  DiaryContentsViewController.m
 //  BabyDiary
@@ -23,6 +25,16 @@
 @synthesize day = _day;
 @synthesize weekOfDay = _weekOfDay;
 @synthesize myDiaryContents = _myDiaryContents;
+@synthesize textView = _textView;
+
+
+-(void)tt{
+    NSLog(@"__%f",self.diaryWrite.frame.origin.x);
+    NSLog(@"__%f",self.diaryWrite.frame.origin.y);
+    NSLog(@"__%f",self.diaryWrite.frame.size.width);
+    NSLog(@"__%f",self.diaryWrite.frame.size.height);
+}
+
 
 
 
@@ -55,7 +67,7 @@
 
 - (void)viewDidLoad
 {
- 
+    [self tt];
     self.dayLabel.text = self.calendarDiary.myDay;
     self.dayOfWeek.text = self.calendarDiary.myDayOfWeek;
     self.diaryWrite.text = self.calendarDiary.myDiaryContents;
@@ -91,6 +103,72 @@
     
     
 }
+
+
+- (void)keyboardWillShow:(NSNotification *)aNotification 
+{
+    NSLog(@"123");
+	// the keyboard is showing so resize the table's height
+	CGRect keyboardRect = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    NSTimeInterval animationDuration =
+	[[[aNotification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    CGRect frame = self.diaryWrite.frame;
+    frame.size.height -= keyboardRect.size.height ;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    self.diaryWrite.frame = frame;
+    
+    NSLog(@"12");
+    [UIView commitAnimations];
+}
+
+- (void)keyboardWillHide:(NSNotification *)aNotification
+{
+    
+    //   self.view.frame = CGRectMake(0, 70, 320, 360);
+    NSLog(@"23");
+    // the keyboard is hiding reset the table's height
+	CGRect keyboardRect = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    NSTimeInterval animationDuration =
+	[[[aNotification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    CGRect frame = self.diaryWrite.frame;
+    frame.size.height += keyboardRect.size.height ;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    self.diaryWrite.frame = frame;
+    [UIView commitAnimations];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated 
+{
+    NSLog(@"124sdf");
+	[super viewWillAppear:animated];
+	
+    // listen for keyboard hide/show notifications so we can properly adjust the table's height
+	[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated 
+{
+    [super viewDidDisappear:animated];
+	
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+}
+
+
 
 
 @end

@@ -25,8 +25,17 @@
     return _dayTimeName;
 }
 
+-(void)today{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy 년 MM 월 dd 일"];
+    self.birthDate.text = [formatter stringFromDate:[NSDate date]];
+
+    
+}
 - (void)viewDidLoad
 {
+    [self today];
+    self.nameTextfield.delegate = self;
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 }
@@ -40,7 +49,10 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
-
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [[self nameTextfield]resignFirstResponder];
+    
+}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
@@ -56,7 +68,7 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
-    
+    NSLog(@"touch");
     return YES;
 }
 

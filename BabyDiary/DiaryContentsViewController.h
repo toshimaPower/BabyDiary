@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *dayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dayOfWeek;
 @property (weak, nonatomic) IBOutlet UITextView *diaryWrite;
+@property (weak, nonatomic) UITextView *textView;
 
 
 @property (nonatomic, weak) id<DiaryContentsViewControllerDelegate> delegate; 
