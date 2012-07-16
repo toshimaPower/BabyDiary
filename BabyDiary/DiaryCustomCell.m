@@ -12,7 +12,7 @@
 @synthesize dayLabel = _dayLabel;
 @synthesize weekOfDayLabel = _weekOfDayLabel;
 @synthesize diaryWrite = _diaryWrite;
-
+@synthesize testLabel = _testLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

@@ -65,12 +65,12 @@
     [super viewDidLoad];
     [self.date time:self.date.birthDay];
 	// Do any additional setup after loading the view.
-    [self timer];
+//    [self timer];
     self.dayLabel.text = [NSString stringWithFormat:@"%i 일",self.date.day];
     self.hourLabel.text = [NSString stringWithFormat:@"%i 시간",self.date.hour];
     self.minuteLabel.text = [NSString stringWithFormat:@"%i 분",self.date.minute];
     self.secondLabel.text = [NSString stringWithFormat:@"%i 초",self.date.second];
-    [self timer];
+   
     //    NSTimer *tm = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(runTime) userInfo:nil repeats:YES];
 
 }

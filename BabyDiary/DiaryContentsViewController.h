@@ -34,5 +34,5 @@
 
 @property (nonatomic, weak) id<DiaryContentsViewControllerDelegate> delegate; 
 
-
+-(id)init;
 @end

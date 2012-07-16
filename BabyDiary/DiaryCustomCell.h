@@ -13,4 +13,5 @@
 @property (nonatomic, weak) IBOutlet UILabel *dayLabel;
 @property (nonatomic, weak) IBOutlet UILabel *weekOfDayLabel;
 @property (nonatomic, weak) IBOutlet UILabel *diaryWrite;
+@property (nonatomic, weak) UILabel *testLabel;
 @end

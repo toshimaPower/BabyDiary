@@ -9,10 +9,18 @@
 #import "DiaryTableViewController.h"
 #import "DiaryCustomCell.h"
 #import "DiaryContentsViewController.h"
+#import "SGViewController.h"
+
+
+#define FONT_SIZE 14.0f
+#define CELL_CONTENT_WIDTH 320.0f
+#define CELL_CONTENT_MARGIN 10.0f
 
 @interface DiaryTableViewController ()<DiaryContentsViewControllerDelegate>
 @property (nonatomic, strong) NSMutableArray *diary_List;
 @property (nonatomic, strong) NSIndexPath *indexPath;
+@property (nonatomic, strong) DiaryCustomCell *cell;
+
 
 @end
 
@@ -28,7 +36,7 @@
 
 @synthesize diary_List = _diary_List;
 @synthesize indexPath = _indexPath;
-
+@synthesize cell = _cell;
 
 -(void)makeFirstTableView{
     
@@ -118,7 +126,7 @@
 - (void)viewDidLoad
 {
     [self.calendar fastEnum:self.calendar.gyear withMonth:self.calendar.gmonth];
- //   self.dayButton.titleLabel.text = [NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth];
+ 
     [self.dayButton setTitle:[NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth] forState:UIControlStateNormal];
     [self loadData];
     [self gestureLeft];
@@ -126,11 +134,7 @@
     [self makeFirstTableView];
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+   
 }
 
 - (void)viewDidUnload
@@ -166,41 +170,151 @@
     return self.calendar.babyDiaryList.count;
 }
 
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-   
-   
-    DiaryCustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"show_detail"];
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"helloTest1");
+    
     CalendarData *data = [self.calendar.babyDiaryList objectAtIndex:indexPath.row];
-    cell.dayLabel.text = data.myDay;
-    cell.weekOfDayLabel.text = data.myDayOfWeek;
-    cell.diaryWrite.text = data.myDiaryContents;
     
+    NSString *text = data.myDiaryContents;
     
+    CGSize constraint = CGSizeMake(240 , 20000.0f);
     
-    return cell;
+    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    
+    CGFloat height = MAX(size.height, 44.0f);
+    
+    return height + (CELL_CONTENT_MARGIN * 2);
 }
+/*
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"456");
+    static NSString *CellIdentifier = @"show_detail";
+    self.cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    
+    CalendarData *data = [self.calendar.babyDiaryList objectAtIndex:indexPath.row];
+    
+    
+    
+    self.cell.dayLabel.text = data.myDay;
+    self.cell.weekOfDayLabel.text = data.myDayOfWeek;
+    self.cell.diaryWrite.text = data.myDiaryContents;
+    
+    
+    
+    return self.cell;
+}
+ 
+ */
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"helloTest2");
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *sg = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    NSLog(@"__sg %@",sg);
+    UILabel *label = nil;
+    UILabel *label2 = nil;
+    UILabel *label3 = nil;
+    NSLog(@"12");
+    if(sg != nil){
+        sg = [[UITableViewCell alloc]initWithFrame:CGRectZero];
+        label = [[UILabel alloc]initWithFrame:CGRectMake(70,10, 240, 0)];
+        label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 50, 20)];
+        label3 = [[UILabel alloc]initWithFrame:CGRectMake(10, 30, 50, 20)];
+        
+        
+        NSLog(@"____%@",label);
+        [label setLineBreakMode:UILineBreakModeWordWrap];
+        [label setMinimumFontSize:FONT_SIZE];
+        [label setFont:[UIFont systemFontOfSize:FONT_SIZE]];
+        [label setNumberOfLines:0];
+        [label setTag:1];
+        [label setBackgroundColor:[UIColor greenColor]];
+        [[sg contentView]addSubview:label];
+        
+        [label2 setLineBreakMode:UILineBreakModeWordWrap];
+        [label2 setMinimumFontSize:FONT_SIZE];
+        [label2 setFont:[UIFont systemFontOfSize:FONT_SIZE]];
+        [label2 setNumberOfLines:0];
+        [label2 setTag:2];
+        [label2 setBackgroundColor:[UIColor yellowColor]];
+        [[sg contentView]addSubview:label2];
+        
+        [label3 setLineBreakMode:UILineBreakModeWordWrap];
+        [label3 setMinimumFontSize:FONT_SIZE];
+        [label3 setFont:[UIFont systemFontOfSize:FONT_SIZE]];
+        [label3 setNumberOfLines:0];
+        [label3 setTag:3];
+        [label3 setBackgroundColor:[UIColor redColor]];
+        [[sg contentView]addSubview:label3];
+        
+    }
+    NSLog(@"334");
+    
+    
+    CalendarData *data = [self.calendar.babyDiaryList objectAtIndex:indexPath.row];
+    NSString *text = data.myDiaryContents;
+    CGSize constraint = CGSizeMake( 240, 20000.0f);
+    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    // Configure the cell...
+    if (!label){
+        label = (UILabel*)[sg viewWithTag:1];
+        label2 = (UILabel*)[sg viewWithTag:2];
+        label3 = (UILabel*)[sg viewWithTag:3];}
+    [label setText:text];
+    [label setFrame:CGRectMake(70,10, 240, MAX(size.height, 44.0f))];
+    [label2 setText:data.myDay];
+    [label3 setText:data.myDayOfWeek];
+    
+    NSLog(@"___data.myDay45 %@",data.myDay);
+    
+    return sg;
+}
+
 
 #pragma mark - Table view delegate
 /*
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    NSLog(@"Hello");
-  //  if([[segue identifier]isEqualToString:@"show_detail"]){
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow ];
- //       DayTimeName *diarydaTa = [self.calendar.myArray objectAtIndex:indexPath.row];
-        DiaryContentsViewController *viewController =(DiaryContentsViewController *)[segue destinationViewController];
-      //  viewController.babyDiaryDataList = diarydaTa;
-        viewController.day =  [self.myArray objectAtIndex:indexPath.row];
-        viewController.weekOfDay = [self.dayOfWeekArray objectAtIndex:indexPath.row];
-        NSLog(@"vieController.day %@",viewController.day);
-        NSLog(@"viewController.weekOfDay %@",viewController.weekOfDay);
-        
-   // }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *appKeyString = [self.appsKey objectAtIndex:indexPath.row];
+    NSDictionary *appInfoDic = [self.appsList objectForKey:appKeyString];
+    
+    DetailViewController *detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
+    
+    detailViewController.appKeyString = appKeyString;
+    detailViewController.appInfoDic = appInfoDic;
+    
+    [self.navigationController pushViewController:detailViewController animated:YES];
+    
+    [detailViewController release];
+    [appInfoDic release];
 }
-
+*/
+/*
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    CalendarData *data = [self.calendar.babyDiaryList objectAtIndex:indexPath.row];
+        DiaryContentsViewController *detailView = [[DiaryContentsViewController alloc]initWithNibName:@"DiaryContentViewController" bundle:nil];
+    detailView.calendarDiary = data;
+    
+    [self.navigationController pushViewController:detailView animated:YES];
+    NSLog(@"sdfasc");
+}
 */
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    CalendarData *data = [self.calendar.babyDiaryList objectAtIndex:indexPath.row];
+    SGViewController *detailView = [[SGViewController alloc]initWithNibName:@"SGViewController" bundle:nil];
+ //   detailView.calendarDiary = data;
+    
+    [self.navigationController pushViewController:detailView animated:YES];
+    NSLog(@"sdfasc");
+
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+   NSLog(@"helloTest3");
    
     if([[segue identifier] isEqualToString:@"show_detail"]){
         self.indexPath = [self.tableView indexPathForSelectedRow];
@@ -212,8 +326,9 @@
 }
 
 -(void)detailViewController:(DiaryContentsViewController *)viewController didChangeCalendarData:(CalendarData *)diaryList{
+    NSLog(@"helloTest4");
     [self.navigationController popViewControllerAnimated:YES];
- //    self.indexPath = [self.tableView indexPathForSelectedRow];   
+     self.indexPath = [self.tableView indexPathForSelectedRow];   
     [self.calendar.babyDiaryList replaceObjectAtIndex:self.indexPath.row withObject:diaryList];
     [self.tableView reloadData];
     [self saveData];
@@ -223,16 +338,19 @@
 
 #pragma mark - Table view delegate
 
+-(void)makeTableViewList{
+    [self.calendar fastEnum:self.calendar.gyear withMonth:self.calendar.gmonth];
+    [self.dayButton setTitle:[NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth] forState:UIControlStateNormal];
+    [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
+    [self loadData];
+    [self.tableView reloadData];
+}
+
 - (void)prevDay:(UIBarButtonItem *)sender {
    
     [self.calendar movePrevMonth];
     
-    [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
-    [self.calendar fastEnum:self.calendar.gyear withMonth:self.calendar.gmonth];
-   [self.dayButton setTitle:[NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth] forState:UIControlStateNormal];
-    
-    [self loadData];
-    [self.tableView reloadData];
+    [self makeTableViewList];
     
     
     
@@ -240,14 +358,24 @@
 
 - (void)next:(UIBarButtonItem *)sender {
     [self.calendar moveNextMonth];
-    [self.calendar fastEnum:self.calendar.gyear withMonth:self.calendar.gmonth];
-    [self.dayButton setTitle:[NSString stringWithFormat:@"%i 년 %i 월 ",self.calendar.gyear,self.calendar.gmonth] forState:UIControlStateNormal];
-    [self.calendar getLastDay:self.calendar.gyear month:self.calendar.gmonth];
-    [self loadData];
-    [self.tableView reloadData];
-    
+    [self makeTableViewList];
     
 }
+/*
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"tsasd");
+    UIFont *font = [UIFont systemFontOfSize:12];
+    CGSize size = CGSizeMake(self.cell.diaryWrite.frame.size.width, 1000);
+    CGSize textSize = [self.calendar.myDiaryContents sizeWithFont:font constrainedToSize:size lineBreakMode:UILineBreakModeCharacterWrap];
+    
+    float height = 50;
+    float h = textSize.height - self.cell.diaryWrite.frame.size.height;
+    if( h > 0 ){
+        height += h;
+    }
+    return height;
 
+}
+ */
 
 @end

@@ -21,6 +21,9 @@
 		5AA153AE15A566340083E5C8 /* DiaryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA153AD15A566340083E5C8 /* DiaryTableViewController.m */; };
 		5AA153B115A5670F0083E5C8 /* DiaryContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA153B015A5670F0083E5C8 /* DiaryContentsViewController.m */; };
 		5AA153B615A56AC00083E5C8 /* MainCountDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA153B515A56AC00083E5C8 /* MainCountDownViewController.m */; };
+		6B8895C515B32B64001C4F87 /* SGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8895C315B32B64001C4F87 /* SGViewController.m */; };
+		6B8895C615B32B64001C4F87 /* SGViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8895C415B32B64001C4F87 /* SGViewController.xib */; };
+		6B8895C815B32C00001C4F87 /* DiaryContentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8895C715B32C00001C4F87 /* DiaryContentsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +52,10 @@
 		5AA153B015A5670F0083E5C8 /* DiaryContentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryContentsViewController.m; sourceTree = "<group>"; };
 		5AA153B415A56AC00083E5C8 /* MainCountDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainCountDownViewController.h; sourceTree = "<group>"; };
 		5AA153B515A56AC00083E5C8 /* MainCountDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainCountDownViewController.m; sourceTree = "<group>"; };
+		6B8895C215B32B64001C4F87 /* SGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGViewController.h; sourceTree = "<group>"; };
+		6B8895C315B32B64001C4F87 /* SGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGViewController.m; sourceTree = "<group>"; };
+		6B8895C415B32B64001C4F87 /* SGViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SGViewController.xib; sourceTree = "<group>"; };
+		6B8895C715B32C00001C4F87 /* DiaryContentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiaryContentsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +146,10 @@
 				5AA153AD15A566340083E5C8 /* DiaryTableViewController.m */,
 				5AA153AF15A5670F0083E5C8 /* DiaryContentsViewController.h */,
 				5AA153B015A5670F0083E5C8 /* DiaryContentsViewController.m */,
+				6B8895C215B32B64001C4F87 /* SGViewController.h */,
+				6B8895C315B32B64001C4F87 /* SGViewController.m */,
+				6B8895C415B32B64001C4F87 /* SGViewController.xib */,
+				6B8895C715B32C00001C4F87 /* DiaryContentsViewController.xib */,
 			);
 			name = Diary;
 			sourceTree = "<group>";
@@ -205,6 +216,8 @@
 			files = (
 				5AA1539315A561080083E5C8 /* InfoPlist.strings in Resources */,
 				5AA1539C15A561080083E5C8 /* MainStoryboard.storyboard in Resources */,
+				6B8895C615B32B64001C4F87 /* SGViewController.xib in Resources */,
+				6B8895C815B32C00001C4F87 /* DiaryContentsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +237,7 @@
 				5AA153B115A5670F0083E5C8 /* DiaryContentsViewController.m in Sources */,
 				5AA153B615A56AC00083E5C8 /* MainCountDownViewController.m in Sources */,
 				5A86A7B415A66A16003E53CA /* DiaryCustomCell.m in Sources */,
+				6B8895C515B32B64001C4F87 /* SGViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
