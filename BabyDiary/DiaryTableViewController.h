@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DiaryContentsViewController.h"
+#import "SGViewController.h"
 
 
 @interface DiaryTableViewController : UITableViewController

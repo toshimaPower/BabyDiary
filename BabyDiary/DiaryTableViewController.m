@@ -7,19 +7,18 @@
 //
 
 #import "DiaryTableViewController.h"
-#import "DiaryCustomCell.h"
-#import "DiaryContentsViewController.h"
-#import "SGViewController.h"
+
+
 
 
 #define FONT_SIZE 14.0f
 #define CELL_CONTENT_WIDTH 320.0f
 #define CELL_CONTENT_MARGIN 10.0f
 
-@interface DiaryTableViewController ()<DiaryContentsViewControllerDelegate>
+@interface DiaryTableViewController ()<SGViewControllerDelegate>
 @property (nonatomic, strong) NSMutableArray *diary_List;
 @property (nonatomic, strong) NSIndexPath *indexPath;
-@property (nonatomic, strong) DiaryCustomCell *cell;
+
 
 
 @end
@@ -36,7 +35,7 @@
 
 @synthesize diary_List = _diary_List;
 @synthesize indexPath = _indexPath;
-@synthesize cell = _cell;
+
 
 -(void)makeFirstTableView{
     
@@ -209,16 +208,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"helloTest2");
+    
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *sg = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    NSLog(@"__sg %@",sg);
+    
     UILabel *label = nil;
     UILabel *label2 = nil;
     UILabel *label3 = nil;
-    NSLog(@"12");
-    if(sg != nil){
+    
+    if(sg == nil){
         sg = [[UITableViewCell alloc]initWithFrame:CGRectZero];
         label = [[UILabel alloc]initWithFrame:CGRectMake(70,10, 240, 0)];
         label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 50, 20)];
@@ -251,9 +250,7 @@
         [[sg contentView]addSubview:label3];
         
     }
-    NSLog(@"334");
-    
-    
+   
     CalendarData *data = [self.calendar.babyDiaryList objectAtIndex:indexPath.row];
     NSString *text = data.myDiaryContents;
     CGSize constraint = CGSizeMake( 240, 20000.0f);
@@ -268,30 +265,13 @@
     [label2 setText:data.myDay];
     [label3 setText:data.myDayOfWeek];
     
-    NSLog(@"___data.myDay45 %@",data.myDay);
+   
     
     return sg;
 }
 
 
 #pragma mark - Table view delegate
-/*
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *appKeyString = [self.appsKey objectAtIndex:indexPath.row];
-    NSDictionary *appInfoDic = [self.appsList objectForKey:appKeyString];
-    
-    DetailViewController *detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
-    
-    detailViewController.appKeyString = appKeyString;
-    detailViewController.appInfoDic = appInfoDic;
-    
-    [self.navigationController pushViewController:detailViewController animated:YES];
-    
-    [detailViewController release];
-    [appInfoDic release];
-}
-*/
 /*
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     CalendarData *data = [self.calendar.babyDiaryList objectAtIndex:indexPath.row];
@@ -304,31 +284,20 @@
 */
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    CalendarData *data = [self.calendar.babyDiaryList objectAtIndex:indexPath.row];
+    self.indexPath = [tableView indexPathForSelectedRow];
+    CalendarData *data = [self.calendar.babyDiaryList objectAtIndex:self.indexPath.row];
     SGViewController *detailView = [[SGViewController alloc]initWithNibName:@"SGViewController" bundle:nil];
- //   detailView.calendarDiary = data;
-    
+    detailView.calendarDiary = data;
+    detailView.delegate = self;
     [self.navigationController pushViewController:detailView animated:YES];
-    NSLog(@"sdfasc");
-
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-   NSLog(@"helloTest3");
    
-    if([[segue identifier] isEqualToString:@"show_detail"]){
-        self.indexPath = [self.tableView indexPathForSelectedRow];
-        CalendarData *data = [self.calendar.babyDiaryList objectAtIndex:self.indexPath.row];
-        DiaryContentsViewController *viewController = [segue destinationViewController];
-        viewController.calendarDiary = data; 
-        viewController.delegate = self;
-    }
 }
 
--(void)detailViewController:(DiaryContentsViewController *)viewController didChangeCalendarData:(CalendarData *)diaryList{
-    NSLog(@"helloTest4");
+
+-(void)detailViewController:(SGViewController *)viewController didChangeCalendarData:(CalendarData *)diaryList{
+    
     [self.navigationController popViewControllerAnimated:YES];
-     self.indexPath = [self.tableView indexPathForSelectedRow];   
+  //   self.indexPath = [self.tableView indexPathForSelectedRow];   
     [self.calendar.babyDiaryList replaceObjectAtIndex:self.indexPath.row withObject:diaryList];
     [self.tableView reloadData];
     [self saveData];
@@ -361,21 +330,5 @@
     [self makeTableViewList];
     
 }
-/*
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"tsasd");
-    UIFont *font = [UIFont systemFontOfSize:12];
-    CGSize size = CGSizeMake(self.cell.diaryWrite.frame.size.width, 1000);
-    CGSize textSize = [self.calendar.myDiaryContents sizeWithFont:font constrainedToSize:size lineBreakMode:UILineBreakModeCharacterWrap];
-    
-    float height = 50;
-    float h = textSize.height - self.cell.diaryWrite.frame.size.height;
-    if( h > 0 ){
-        height += h;
-    }
-    return height;
-
-}
- */
 
 @end

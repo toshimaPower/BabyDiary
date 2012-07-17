@@ -194,17 +194,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="0.97925038918232321" blue="0.71578112510564595" alpha="1" colorSpace="calibratedRGB"/>
-                        <prototypes>
-                            <tableViewCell autoresizesSubviews="NO" alpha="0.40000000000000013" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="54" id="TLn-Ri-VSh" customClass="DiaryCustomCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="54"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="53"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="Lpx-MW-RUu" id="BXS-UD-qXb"/>
                             <outlet property="delegate" destination="Lpx-MW-RUu" id="rCW-b7-re0"/>
@@ -318,14 +307,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="outlet" name="dayLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="dayOfWeek" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="diaryWrite" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="DiaryCustomCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DiaryCustomCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="dayLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="diaryWrite" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="weekOfDayLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="DiaryTableViewController" superclassName="UITableViewController">
